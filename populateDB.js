@@ -2,6 +2,7 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
 const mongoose = require('mongoose');
+const debug = require('debug')('populate');
 
 const Category = require('./models/categoryModel');
 const Item = require('./models/itemModel');
@@ -16,7 +17,7 @@ async function categoryCreate(name, description) {
 
 	const theCategory = await category.save();
 	categories.push(theCategory);
-	console.log('Added Category: ' + theCategory);
+	debug('Added Category: ' + theCategory);
 }
 
 function createCategories() {
@@ -46,7 +47,7 @@ async function itemCreate(
 	});
 
 	const theItem = await item.save();
-	console.log(theItem);
+	debug(theItem);
 }
 
 mongoose
@@ -55,7 +56,7 @@ mongoose
 		useUnifiedTopology: true,
 	})
 	.then(async () => {
-		console.log('Connected');
+		debug('Connected');
 		await createCategories();
 		await itemCreate(
 			'Apple',
@@ -67,10 +68,10 @@ mongoose
 			categories[0]
 		);
 		mongoose.connection.close();
-		console.log('Disconected');
+		debug.log('Disconected');
 	})
 	.catch((err) => {
 		console.log(err);
 		mongoose.connection.close();
-		console.log('Disconected');
+		debug('Disconected');
 	});
