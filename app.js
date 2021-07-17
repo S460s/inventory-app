@@ -6,6 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const compression = require('compression');
 const helmet = require('helmet');
+const logger = require('morgan');
 const debug = require('debug')('myapp');
 
 const PORT = process.env.PORT || 8000;
@@ -29,9 +30,12 @@ mongoose
 
 app.set('view engine', 'pug');
 
+app.use(logger('dev'));
 app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
+
 app.use(compression());
+app.use(helmet());
+
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {

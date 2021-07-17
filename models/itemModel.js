@@ -5,10 +5,10 @@ const ItemSchema = new Schema({
 	name: { type: String, required: true },
 	description: { type: String, required: true },
 	category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
-	password: { type: string, required: true },
+	password: { type: String, required: true },
 	price: { type: Number, required: true },
 	numberInStock: { type: Number, required: true },
-	contact: { type: string },
+	contact: { type: String },
 });
 
 ItemSchema.virtual('url').get(function () {
