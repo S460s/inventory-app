@@ -1,9 +1,14 @@
-const express = require('express');
+const Item = require('../models/itemModel');
 
-const router = express.Router();
+const item_details = (req, res, next) => {
+	const id = req.params.id;
+	Item.findById(id)
+		.populate('category')
+		.then((item) => {
+			res.render('items/item_details', { item });
+		});
+};
 
-router.get('/:id', (req, res, next) => {
-	res.send('SUCCESS');
-});
-
-module.exports = router;
+module.exports = {
+	item_details,
+};

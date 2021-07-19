@@ -16,9 +16,6 @@ const category_items = (req, res, next) => {
 
 	objPromiseAll({ category, items })
 		.then(({ category, items }) => {
-			console.log(category);
-
-			console.log(items);
 			res.render('categories/category_items', { category, item_list: items });
 		})
 		.catch(next);
