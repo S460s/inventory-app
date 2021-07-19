@@ -40,7 +40,7 @@ app.use(helmet());
 
 app.use(express.static('public'));
 
-app.use('/categories', categoryRouter);
+app.use('/category', categoryRouter);
 
 app.get('/', (req, res) => {
 	res.render('index', { title: 'Home' });

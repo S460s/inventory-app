@@ -13,14 +13,14 @@ block content
                 p.card.header.title.px-2.py-2 #{category.name}
               .card-content 
                 .content  
-                  p #{category.description}
-                  p Created at: #{category.createdAt}
+                  p.subtitle #{category.description}
+                  p.has-text-grey Created at: #{category.createdAt}
                   if category.createdAt !== category.updatedAt
-                    p Updated at: #{category.updatedAt}
+                    p.has-text-grey Updated at: #{category.updatedAt}
               footer.card-footer
-                a.card-footer-item.has-text-primary View  
-                a.card-footer-item.has-text-info Edit 
-                a.card-footer-item.has-text-danger Delete
+                a(href=category.url).card-footer-item.has-text-primary View  
+                a(href=`${category.url}/update`).card-footer-item.has-text-info Edit 
+                a(href=`${category.url}/delete`).card-footer-item.has-text-danger Delete
         else 
           article.message.is-info 
             .message-header
