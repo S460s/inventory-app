@@ -7,18 +7,20 @@ block content
       h2.title Items for #{category.name}  
       div.columns.mt-t.is-8.is-variable.is-centered
           each item in item_list
-            div.column 
-              div.card.my-5 
+            div.column.is-half
+              div.card.my-5
+
                 .card-image 
                    figure.image.is-1by10 
                     img(src=item.imgUrl, alt=item.description)
 
                 .card-content 
-                  .content  
-                    p.subtitle #{category.description}
-                    p.has-text-grey Created at: #{category.createdAt}
+                  .content
+                    p.title #{item.name}  
+                    p.subtitle #{item.description}
+                    p.has-text-grey Created at: #{item.createdAt}
                     if category.createdAt !== category.updatedAt
-                      p.has-text-grey Updated at: #{category.updatedAt}
+                      p.has-text-grey Updated at: #{catitemegory.updatedAt}
                 footer.card-footer
                   a(href=category.url).card-footer-item.has-text-primary View  
                   a(href=`${category.url}/update`).card-footer-item.has-text-info Edit 
