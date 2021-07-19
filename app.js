@@ -10,6 +10,7 @@ const logger = require('morgan');
 const debug = require('debug')('myapp');
 
 const categoryRouter = require('./routes/categoryRoute');
+const itemRouter = require('./routes/itemRoute');
 
 const PORT = process.env.PORT || 8000;
 
@@ -49,6 +50,7 @@ app.use(
 app.use(express.static('public'));
 
 app.use('/category', categoryRouter);
+app.use('/item', itemRouter);
 
 app.get('/', (req, res) => {
 	res.render('index', { title: 'Home' });
