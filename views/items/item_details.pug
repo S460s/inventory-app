@@ -13,4 +13,23 @@ block content
       li.is-active
         a #{item.name}
 
-  h1 #{item.name}
+  section.section
+    .continer
+      .columns.is-vcentered.is-multiline
+        .box.column.is-6-tablet.is-3-desktop
+          h1.is-size-3-mobile.is-size-1-desktop.title #{item.name}
+
+          p.subtitle #{item.description}
+        .column.is-6-tablet.is-5-desktop.has-text-centered
+          img.px-6(style='max-height: 500px' src=item.imgUrl alt=item.name)
+        .column
+          .is-size-12-tablet.is-size-4-desktop.mb-4 Price: $#{item.price}
+          .is-size-12-tablet.is-size-4-desktop.mb-4 Number in Stock: #{item.numberInStock}
+          .is-size-12-tablet.is-size-4-desktop.mb-4 Contact: #{item.contact}
+
+          .box
+            button.button.is-info.mr-3 
+              a(href=item.url + '/update').has-text-white Update 
+            button.button.is-danger 
+              a(href=item.url + '/delete').has-text-white Delete
+  
