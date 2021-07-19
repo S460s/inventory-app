@@ -14,7 +14,9 @@ block content
               .card-content 
                 .content  
                   p #{category.description}
-                  p Created At
+                  p Created at: #{category.createdAt}
+                  if category.createdAt !== category.updatedAt
+                    p Updated at: #{category.updatedAt}
               footer.card-footer
                 a.card-footer-item.has-text-primary View  
                 a.card-footer-item.has-text-info Edit 

@@ -68,7 +68,7 @@ mongoose
 			categories[0]
 		);
 		mongoose.connection.close();
-		debug.log('Disconected');
+		debug('Disconected');
 	})
 	.catch((err) => {
 		console.log(err);
