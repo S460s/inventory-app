@@ -37,6 +37,14 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(compression());
 app.use(helmet());
+app.use(
+	helmet.contentSecurityPolicy({
+		useDefaults: true,
+		directives: {
+			'img-src': '*',
+		},
+	})
+);
 
 app.use(express.static('public'));
 

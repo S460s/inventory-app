@@ -22,7 +22,7 @@ async function categoryCreate(name, description) {
 
 function createCategories() {
 	return Promise.all([
-		categoryCreate('Fruits', 'Natural Seets'),
+		categoryCreate('Fruits', 'Natural Sweets'),
 		categoryCreate('Coffees', 'Tasty hot drinks.'),
 	]);
 }
@@ -34,7 +34,8 @@ async function itemCreate(
 	price,
 	numberInStock,
 	contact,
-	category
+	category,
+	imgUrl
 ) {
 	const item = new Item({
 		name,
@@ -44,6 +45,7 @@ async function itemCreate(
 		numberInStock,
 		contact,
 		category,
+		imgUrl,
 	});
 
 	const theItem = await item.save();
@@ -65,7 +67,8 @@ mongoose
 			1,
 			1000,
 			'qwerty',
-			categories[0]
+			categories[0],
+			'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Irp72r8lffgzSqG-HiGKmxE0zz6QJyABJA&usqp=CAU'
 		);
 		mongoose.connection.close();
 		debug('Disconected');

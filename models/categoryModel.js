@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema(
 	{
-		createdAt: String,
-		updatedAt: String,
+		createdAt: { type: String },
+		updatedAt: { type: String },
 		name: { type: String, required: true },
 		description: { type: String, required: true },
 	},

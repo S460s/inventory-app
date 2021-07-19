@@ -4,6 +4,8 @@ const { DateTime } = require('luxon');
 
 const ItemSchema = new Schema(
 	{
+		createdAt: { type: String },
+		updatedAt: { type: String },
 		name: { type: String, required: true },
 		description: { type: String, required: true },
 		category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
@@ -11,6 +13,7 @@ const ItemSchema = new Schema(
 		price: { type: Number, required: true },
 		numberInStock: { type: Number, required: true },
 		contact: { type: String },
+		imgUrl: { type: String },
 	},
 	{
 		timestamps: {
