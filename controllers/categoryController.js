@@ -1,12 +1,15 @@
 const objPromiseAll = require('obj-promise-all');
+const { body, validationResult } = require('express-validator');
 
 const Category = require('../models/categoryModel');
 const Item = require('../models/itemModel');
 
 const category_list = (req, res, next) => {
-	const categories = Category.find().then((category_list) => {
-		res.render('categories/category_list.pug', { category_list });
-	});
+	const categories = Category.find()
+		.then((category_list) => {
+			res.render('categories/category_list.pug', { category_list });
+		})
+		.catch(next);
 };
 
 const category_items = (req, res, next) => {
@@ -28,8 +31,11 @@ const category_create_get = (req, res, next) => {
 	res.render('categories/category_form.pug');
 };
 
+const category_create_post = [];
+
 module.exports = {
 	category_list,
 	category_items,
 	category_create_get,
+	category_create_post,
 };

@@ -6,7 +6,8 @@ const item_details = (req, res, next) => {
 		.populate('category')
 		.then((item) => {
 			res.render('items/item_details', { item });
-		});
+		})
+		.catch(next);
 };
 
 module.exports = {
