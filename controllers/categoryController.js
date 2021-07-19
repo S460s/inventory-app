@@ -16,12 +16,20 @@ const category_items = (req, res, next) => {
 
 	objPromiseAll({ category, items })
 		.then(({ category, items }) => {
-			res.render('categories/category_items', { category, item_list: items });
+			res.render('categories/category_items.pug', {
+				category,
+				item_list: items,
+			});
 		})
 		.catch(next);
+};
+
+const category_create_get = (req, res, next) => {
+	res.render('categories/category_form.pug');
 };
 
 module.exports = {
 	category_list,
 	category_items,
+	category_create_get,
 };

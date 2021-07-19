@@ -1,0 +1,23 @@
+extends ../layouts/header.pug
+
+block content 
+  .section.pt-4.pb-0
+  nav.breadcrumb.has-arrow-separator
+    ul.container
+      li
+        a(href='/').has-text-grey Home 
+      li
+        a(href='/category/list').has-text-grey Categories
+      li.is-active
+        a Add Category
+  .box      
+    form(action="/category/create" method='POST')
+      .field
+        label.label(for='name') Name
+        .control
+          input.input(required id='name' type='text' placeholder='E.g. Books, Games etc.')
+      .field
+        label.label(for='description') Description
+        .control
+          textarea.textarea(required id='description' name='description' placeholder='Description about the category.')
+      button.button Add
