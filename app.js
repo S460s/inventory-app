@@ -9,6 +9,8 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const debug = require('debug')('myapp');
 
+const categoryRouter = require('./routes/categoryRoute');
+
 const PORT = process.env.PORT || 8000;
 
 const app = express();
@@ -37,6 +39,8 @@ app.use(compression());
 app.use(helmet());
 
 app.use(express.static('public'));
+
+app.use('/categories', categoryRouter);
 
 app.get('/', (req, res) => {
 	res.render('index', { title: 'Home' });
