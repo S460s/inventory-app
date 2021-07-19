@@ -1,5 +1,5 @@
 const category_list = (req, res, next) => {
-	res.send('NOT IMPLEMENTED: CATEGORY_LIST');
+	res.render('categories/category_list.pug');
 };
 
 module.exports = {
