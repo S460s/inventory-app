@@ -4,6 +4,12 @@ const { body, validationResult } = require('express-validator');
 const Category = require('../models/categoryModel');
 const Item = require('../models/itemModel');
 
+const inputValidationArr = [
+	body('pswd', 'Password is required').trim().escape(),
+	body('name', 'Category name required').trim().escape(),
+	body('description', 'Description is required ').trim().escape(),
+];
+
 const category_list = (req, res, next) => {
 	const categories = Category.find()
 		.then((category_list) => {
@@ -33,9 +39,7 @@ const category_create_get = (req, res, next) => {
 };
 
 const category_create_post = [
-	body('pswd', 'Password is required').trim().escape(),
-	body('name', 'Category name required').trim().escape(),
-	body('description', 'Description is required ').trim().escape(),
+	...inputValidationArr,
 
 	(req, res, next) => {
 		const errors = validationResult(req);
@@ -76,10 +80,7 @@ const category_update_get = (req, res, next) => {
 };
 
 const category_update_post = [
-	body('pswd', 'Password is required').trim().escape(),
-	body('name', 'Category name required').trim().escape(),
-	body('description', 'Description is required ').trim().escape(),
-
+	...inputValidationArr,
 	(req, res, next) => {
 		const id = req.params.id;
 		const category = new Category({ ...req.body, _id: id });

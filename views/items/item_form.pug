@@ -15,12 +15,12 @@ block content
           a #{breadcrumbText}
   .box
     - const actionPath = isUpdate? `/item/${item._id}/update` : '/category/create'      
-    form(action=actionPath  method='POST')
+    form(action=`/item/${category._id}/create`  method='POST')
       .field
         label.label(for='name') Name
         .control
           - const name = item?.name
-          input.input(value=name required name='name' id='name' type='text' placeholder='E.g. Apples, Oranges etc.')
+          input.input(value=name  name='name' id='name' type='text' placeholder='E.g. Apples, Oranges etc.')
       
       .field
         label.label(for='price') Price
