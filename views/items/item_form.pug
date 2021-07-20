@@ -1,7 +1,7 @@
 extends ../layouts/header.pug
 
 block content 
-    .section.pt-4.pb-0
+  .section.pt-4.pb-0
     nav.breadcrumb.has-arrow-separator
       ul.container
         li
@@ -13,3 +13,35 @@ block content
         li.is-active
           - const breadcrumbText = isUpdate? 'Edit Item' : 'Add Item'
           a #{breadcrumbText}
+  .box
+    - const actionPath = isUpdate? `/item/${item._id}/update` : '/category/create'      
+    form(action=actionPath  method='POST')
+      .field
+        label.label(for='name') Name
+        .control
+          - const name = item?.name
+          input.input(value=name required name='name' id='name' type='text' placeholder='E.g. Apples, Oranges etc.')
+      .field
+        label.label(for='description') Description
+        .control
+          - const description = item?.description
+          textarea.textarea( required id='description' name='description' placeholder='Description about the item.') #{description}
+      .field.mt-2
+        label.label(for='pswd') Admin Password
+        .control
+          input.input( required name='pswd' id='pswd' type='password' placeholder='test123')
+          p.has-text-grey This password will be later used to update and delete the item.
+    
+      - const action = isUpdate? 'Update' : 'Add'  
+      button.button #{action}
+  if errors
+    #errMsg.section.is-centered
+      article.message.is-danger
+        .message-header 
+          p Errors
+          button#closeBtn.delete
+        .message-body 
+          ul
+            for error in errors
+              li!= error.msg
+  script(src="../../scripts/errorMsg.js")  
