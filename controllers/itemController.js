@@ -21,7 +21,7 @@ const inputValidationArr = [
 		.escape()
 		.isLength({ min: 1 }),
 	body('contact', 'Contact is required.').trim().escape().isLength({ min: 1 }),
-	body('imgUrl', 'Image URL is required.').trim().escape().isLength({ min: 1 }),
+	body('imgUrl', 'Image URL is required.').trim().isLength({ min: 1 }),
 ];
 
 const item_details = (req, res, next) => {
@@ -93,15 +93,55 @@ const item_update_post = [
 	inputValidationArr,
 	(req, res, next) => {
 		const id = req.params.id;
-		Item.findById(id).then((item) => {
-			bcrypt.compare(req.body.password, item.password).then((result) => {
-				if (result || req.body.password === process.env.ADMIN_PSWD) {
-					res.send('OK');
-				} else {
-					res.send('Not OK');
+		const isUpdate = true;
+		const errors = validationResult(req);
+		Item.findById(id)
+			.populate('category')
+			.then((item) => {
+				if (!errors.isEmpty()) {
+					res.render('items/item_form.pug', {
+						category: item.category,
+						item,
+						errors: errors.array(),
+						isUpdate,
+					});
+					return;
 				}
-			});
-		});
+
+				bcrypt
+					.compare(req.body.password, item.password)
+					.then((result) => {
+						if (result || req.body.password === process.env.ADMIN_PSWD) {
+							Item.exists({ name: req.body.name })
+								.then((isThere) => {
+									if (isThere) {
+										if (req.body.name === item.name) {
+											const newItem = new Item({
+												...req.body,
+												_id: id,
+												category: item.category._id,
+											});
+											console.log('Body');
+											console.log(req.body);
+											Item.findByIdAndUpdate(id, newItem, {}).then(() => {
+												res.redirect(`${item.category.url}`);
+											});
+										}
+									}
+								})
+								.catch(next);
+						} else {
+							res.render('items/item_form.pug', {
+								category: item.category,
+								item,
+								errors: [{ msg: 'Wrong password' }],
+								isUpdate,
+							});
+						}
+					})
+					.catch(next);
+			})
+			.catch(next);
 	},
 ];
 

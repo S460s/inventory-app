@@ -25,8 +25,6 @@ const category_items = (req, res, next) => {
 
 	objPromiseAll({ category, items })
 		.then(({ category, items }) => {
-			console.log(category);
-			console.log(1, id);
 			res.render('categories/category_items.pug', {
 				category,
 				item_list: items,
