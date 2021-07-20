@@ -26,6 +26,8 @@ block content
                   p.has-text-grey Created at: #{category.createdAt}
                   if category.createdAt !== category.updatedAt
                     p.has-text-grey Updated at: #{category.updatedAt}
+                  else 
+                    br
               footer.card-footer
                 a(href=category.url).card-footer-item.has-text-primary View  
                 a(href=`${category.url}/update`).card-footer-item.has-text-info Edit 

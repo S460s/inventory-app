@@ -81,7 +81,6 @@ const category_update_post = [
 	(req, res, next) => {
 		const id = req.params.id;
 		const category = new Category({ ...req.body, _id: id });
-		console.log(category);
 
 		if (req.body.pswd === process.env.ADMIN_PSWD) {
 			const errors = validationResult(req);
@@ -90,21 +89,26 @@ const category_update_post = [
 				res.render('category/category_form.pug', { isUpdate, category });
 				return;
 			}
-			const exsists = Category.exists({ name: req.body.name }).then(
-				(isThere) => {
-					if (isThere && category.name === req.body.name) {
-						res.render('categories/category_form.pug', {
-							category,
-							errors: [{ msg: `Category ${req.body.name} already exsists.` }],
-							isUpdate: true,
-						});
-					} else {
-						Category.findByIdAndUpdate(id, category, {})
-							.then((result) => {
-								res.redirect('/category/list');
-							})
-							.catch(next);
+			const currentCategoryName = Category.findById(id, 'name');
+			const isThere = Category.exists({ name: req.body.name });
+
+			objPromiseAll({ currentCategoryName, isThere }).then(
+				({ currentCategoryName, isThere }) => {
+					if (isThere) {
+						if (req.body.name !== currentCategoryName) {
+							res.render('categories/category_form.pug', {
+								category,
+								errors: [{ msg: `Category ${req.body.name} already exsists.` }],
+								isUpdate: true,
+							});
+							return;
+						}
 					}
+					Category.findByIdAndUpdate(id, category, {})
+						.then((result) => {
+							res.redirect('/category/list');
+						})
+						.catch(next);
 				}
 			);
 		} else {
