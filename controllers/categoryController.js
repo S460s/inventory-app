@@ -92,7 +92,7 @@ const category_update_post = [
 			}
 			const exsists = Category.exists({ name: req.body.name }).then(
 				(isThere) => {
-					if (isThere && category.name !== req.body.name) {
+					if (isThere && category.name === req.body.name) {
 						res.render('categories/category_form.pug', {
 							category,
 							errors: [{ msg: `Category ${req.body.name} already exsists.` }],
