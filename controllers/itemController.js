@@ -168,7 +168,26 @@ const item_delete_get = (req, res, next) => {
 
 const item_delete_post = (req, res, next) => {
 	const id = req.params.id;
-	res.send('OK');
+	Item.findById(id)
+		.populate('category')
+		.then((item) => {
+			bcrypt
+				.compare(req.body.password, item.password)
+				.then((result) => {
+					if (result || req.body.password === process.env.ADMIN_PSWD) {
+						Item.findByIdAndDelete(id).then(() => {
+							res.redirect(item.category.url);
+						});
+					} else {
+						res.render('items/item_delete.pug', {
+							item,
+							category: item.category,
+							errors: [{ msg: 'Wrong password.' }],
+						});
+					}
+				})
+				.catch(next);
+		});
 };
 
 module.exports = {
