@@ -27,7 +27,7 @@ block content
                     p.title.is-4 #{item.name}  
                     p.subtitle #{item.description}
                     p.has-text-grey Created at: #{item.createdAt}
-                    if category.createdAt !== category.updatedAt
+                    if item.createdAt !== item.updatedAt
                       p.has-text-grey Updated at: #{catitemegory.updatedAt}
                 footer.card-footer
                   a(href=item.url).card-footer-item.has-text-primary View  
