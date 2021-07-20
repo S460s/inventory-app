@@ -109,6 +109,8 @@ const item_update_post = [
 					return;
 				}
 
+				console.log(item.password);
+
 				bcrypt
 					.compare(req.body.password, item.password)
 					.then((result) => {
@@ -117,17 +119,27 @@ const item_update_post = [
 							Item.exists({ name: req.body.name })
 								.then((isThere) => {
 									if (isThere) {
-										if (req.body.name === item.name) {
-											const newItem = new Item({
-												...req.body,
-												_id: id,
-												category: item.category._id,
+										if (req.body.name !== item.name) {
+											res.render('items/item_form.pug', {
+												category: item.category,
+												item,
+												errors: [
+													{ msg: `Item ${req.body.name} already exists.` },
+												],
+												isUpdate,
 											});
-											Item.findByIdAndUpdate(item._id, newItem, {}).then(() => {
-												res.redirect(`${item.category.url}`);
-											});
+											return;
 										}
 									}
+									const newItem = new Item({
+										...req.body,
+										category: item.category._id,
+										password: item.password,
+										_id: id,
+									});
+									Item.findByIdAndUpdate(item._id, newItem, {}).then(() => {
+										res.redirect(`${item.category.url}`);
+									});
 								})
 								.catch(next);
 						} else {
