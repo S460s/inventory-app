@@ -13,7 +13,8 @@ block content
 
   section.section 
     .container
-      h2.title Items for #{category.name}  
+      h2.title #{category.name} 
+        a.has-text-primary(href=`/item/${category._id}/create`) +  
       div.columns.mt-t.is-8.is-variable.is-centered.is-multiline
           each item in item_list
             div.column.is-half
