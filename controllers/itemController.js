@@ -75,8 +75,23 @@ const item_create_post = [
 	},
 ];
 
+const item_update_get = (req, res, next) => {
+	const id = req.params.id;
+	const isUpdate = true;
+	Item.findById(id)
+		.populate('category')
+		.then((item) => {
+			res.render('items/item_form.pug', {
+				category: item.category,
+				item,
+				isUpdate,
+			});
+		});
+};
+
 module.exports = {
 	item_details,
 	item_create_get,
 	item_create_post,
+	item_update_get,
 };
