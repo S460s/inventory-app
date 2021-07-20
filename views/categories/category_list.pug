@@ -31,14 +31,10 @@ block content
               footer.card-footer
                 a(href=category.url).card-footer-item.has-text-primary View  
                 a(href=`${category.url}/update`).card-footer-item.has-text-info Edit 
-                a(href=`${category.url}/delete`).card-footer-item.has-text-danger Delete
+                a(href=`${category.url}/delete` data-id=category._id).card-footer-item.has-text-danger Delete
         else 
           article.message.is-info 
             .message-header
               p Info 
             .message-body
               p Looks like there are no categories at the moment.
-
-
-
-  

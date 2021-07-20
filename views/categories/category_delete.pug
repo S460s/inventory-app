@@ -1,0 +1,10 @@
+extends ../layouts/header.pug
+
+block content 
+  .box 
+    form(action="category/:id/delete", method="post")
+      .field.mt-2
+        label.label(for='pswd') Admin Password
+        .control
+          input.input( required name='pswd' id='pswd' type='password' placeholder='test123') 
+      button.button.is-danger Delete
