@@ -17,10 +17,10 @@ block content
         a.has-text-primary(href=`/item/${category._id}/create`) +  
       div.columns.mt-t.is-8.is-variable.is-centered.is-multiline
           each item in item_list
-            div.column.is-half
-              div.card.my-5
+            div.column
+              div(style='height: 100%').card.equal-height
                 .card-image 
-                   figure.image.is-4by3 
+                   figure.image
                     img(src=item.imgUrl, alt=item.description )
 
                 .card-content 
