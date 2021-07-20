@@ -158,6 +158,16 @@ const item_update_post = [
 ];
 
 const item_delete_get = (req, res, next) => {
+	const id = req.params.id;
+	Item.findById(id)
+		.populate('category')
+		.then((item) => {
+			res.render('items/item_delete.pug', { item, category: item.category });
+		});
+};
+
+const item_delete_post = (req, res, next) => {
+	const id = req.params.id;
 	res.send('OK');
 };
 
@@ -168,4 +178,5 @@ module.exports = {
 	item_update_get,
 	item_update_post,
 	item_delete_get,
+	item_delete_post,
 };

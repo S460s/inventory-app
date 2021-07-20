@@ -6,6 +6,7 @@ const {
 	item_update_get,
 	item_update_post,
 	item_delete_get,
+	item_delete_post,
 } = require('../controllers/itemController');
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.post('/:catid/create', item_create_post);
 router.get('/:id/update', item_update_get);
 router.post('/:id/update', item_update_post);
 router.get('/:id/delete', item_delete_get);
+router.post('/:id/delete', item_delete_post);
 
 router.get('/:id', item_details);
 
