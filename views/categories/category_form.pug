@@ -15,11 +15,13 @@ block content
       .field
         label.label(for='name') Name
         .control
-          input.input(required name='name' id='name' type='text' placeholder='E.g. Books, Games etc.')
+          - const name = category?.name
+          input.input(value=name required name='name' id='name' type='text' placeholder='E.g. Books, Games etc.')
       .field
         label.label(for='description') Description
         .control
-          textarea.textarea(required id='description' name='description' placeholder='Description about the category.')
+          - const description = category?.description
+          textarea.textarea( required id='description' name='description' placeholder='Description about the category.') #{description}
       button.button Add
   if errors
     #errMsg.section.is-centered

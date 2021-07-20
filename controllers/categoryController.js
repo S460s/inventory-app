@@ -50,6 +50,7 @@ const category_create_post = [
 			.then((isThere) => {
 				if (isThere) {
 					res.render('categories/category_form.pug', {
+						category: newCategory,
 						errors: [{ msg: `Category ${req.body.name} already exsists.` }],
 					});
 				} else {
