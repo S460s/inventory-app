@@ -2,14 +2,14 @@ extends ../layouts/header
 
 block content 
   .section.pt-4.pb-0
-  nav.breadcrumb.has-arrow-separator
-    ul.container
-      li
-        a(href='/').has-text-grey Home 
-      li
-        a(href='/category/list').has-text-grey Categories
-      li.is-active
-        a #{category.name}
+    nav.breadcrumb.has-arrow-separator
+      ul.container
+        li
+          a(href='/').has-text-grey Home 
+        li
+          a(href='/category/list').has-text-grey Categories
+        li.is-active
+          a #{category.name}
 
   section.section 
     .container

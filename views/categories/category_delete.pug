@@ -1,7 +1,17 @@
 extends ../layouts/header.pug
 
 block content 
-  .box 
+  .section.pt-4.pb-0
+    nav.breadcrumb.has-arrow-separator
+      ul.container
+        li
+          a(href='/').has-text-grey Home 
+        li
+          a(href='/category/list').has-text-grey Categories
+        li.is-active
+          - const breadcrumbText = isUpdate? 'Edit Category' : 'Add Category'
+          a #{breadcrumbText}
+  .box
     form(action="category/:id/delete", method="post")
       .field.mt-2
         label.label(for='pswd') Admin Password

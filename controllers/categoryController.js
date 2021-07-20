@@ -122,6 +122,10 @@ const category_update_post = [
 	},
 ];
 
+const category_delete_get = (req, res, next) => {
+	res.render('categories/category_delete.pug');
+};
+
 module.exports = {
 	category_list,
 	category_items,
@@ -129,4 +133,5 @@ module.exports = {
 	category_create_post,
 	category_update_get,
 	category_update_post,
+	category_delete_get,
 };
