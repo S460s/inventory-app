@@ -66,9 +66,22 @@ const item_create_post = [
 						});
 					});
 				} else {
-					console.log(item);
-					item.save().then((result) => {
-						res.redirect(`/category/${catid}`);
+					Item.exists({ name: req.body.name }).then((isThere) => {
+						if (isThere) {
+							console.log(item);
+							Category.findById(catid).then((category) => {
+								res.render('items/item_form.pug', {
+									category,
+									item,
+									errors: [{ msg: `Item ${req.body.name} already exists.` }],
+								});
+								return;
+							});
+						} else {
+							item.save().then((result) => {
+								res.redirect(`/category/${catid}`);
+							});
+						}
 					});
 				}
 			})

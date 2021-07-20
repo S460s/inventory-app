@@ -29,7 +29,7 @@ block content
                     p.subtitle #{item.description}
                     p.has-text-grey Created at: #{item.createdAt}
                     if item.createdAt !== item.updatedAt
-                      p.has-text-grey Updated at: #{catitemegory.updatedAt}
+                      p.has-text-grey Updated at: #{item.updatedAt}
                 footer.card-footer
                   a(href=item.url).card-footer-item.has-text-primary View  
                   a(href=`${item.url}/update`).card-footer-item.has-text-info Edit 
