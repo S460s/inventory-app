@@ -54,7 +54,7 @@ block content
       .field.mt-2
         label.label(for='pswd') Password
         .control
-          input.input( required name='pswd' id='pswd' type='password' placeholder='test123')
+          input.input( required name='pswd' id='pswd' type='password' placeholder='E.g. test123')
           p.has-text-grey.mt-2 This password will be later used to update and delete the item.
     
       - const action = isUpdate? 'Update' : 'Add'  
@@ -69,4 +69,4 @@ block content
           ul
             for error in errors
               li!= error.msg
-  script(src="../../scripts/errorMsg.js")  
+    script(src="../../scripts/errorMsg.js")  
