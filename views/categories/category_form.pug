@@ -9,7 +9,8 @@ block content
       li
         a(href='/category/list').has-text-grey Categories
       li.is-active
-        a Add Category
+        - const breadcrumbText = isUpdate? 'Edit Category' : 'Add Category'
+        a #{breadcrumbText}
   .box
     - const actionPath = isUpdate? `/category/${category._id}/update` : '/category/create'      
     form(action=actionPath  method='POST')

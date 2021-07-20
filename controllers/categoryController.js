@@ -89,13 +89,14 @@ const category_update_post = [
 				res.render('category/category_form.pug', { isUpdate, category });
 				return;
 			}
-			const currentCategoryName = Category.findById(id, 'name');
+			const currentCategory = Category.findById(id, 'name');
 			const isThere = Category.exists({ name: req.body.name });
 
-			objPromiseAll({ currentCategoryName, isThere }).then(
-				({ currentCategoryName, isThere }) => {
+			objPromiseAll({ currentCategory, isThere }).then(
+				({ currentCategory, isThere }) => {
+					console.log(currentCategory, isThere);
 					if (isThere) {
-						if (req.body.name !== currentCategoryName) {
+						if (req.body.name !== currentCategory.name) {
 							res.render('categories/category_form.pug', {
 								category,
 								errors: [{ msg: `Category ${req.body.name} already exsists.` }],
