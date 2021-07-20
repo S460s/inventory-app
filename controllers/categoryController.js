@@ -33,6 +33,7 @@ const category_create_get = (req, res, next) => {
 };
 
 const category_create_post = [
+	body('pswd', 'Password is required').trim().escape(),
 	body('name', 'Category name required').trim().escape(),
 	body('description', 'Description is required ').trim().escape(),
 
@@ -75,6 +76,7 @@ const category_update_get = (req, res, next) => {
 };
 
 const category_update_post = [
+	body('pswd', 'Password is required').trim().escape(),
 	body('name', 'Category name required').trim().escape(),
 	body('description', 'Description is required ').trim().escape(),
 
@@ -86,7 +88,11 @@ const category_update_post = [
 			const errors = validationResult(req);
 
 			if (!errors.isEmpty()) {
-				res.render('category/category_form.pug', { isUpdate, category });
+				res.render('category/category_form.pug', {
+					isUpdate,
+					category,
+					errors: errors.array(),
+				});
 				return;
 			}
 			const currentCategory = Category.findById(id, 'name');
@@ -123,8 +129,53 @@ const category_update_post = [
 ];
 
 const category_delete_get = (req, res, next) => {
-	res.render('categories/category_delete.pug');
+	const id = req.params.id;
+	Category.findById(id)
+		.then((category) => {
+			res.render('categories/category_delete.pug', { category });
+		})
+		.catch(next);
 };
+
+const category_delete_post = [
+	body('pswd', 'Password is required').trim().escape(),
+	(req, res, next) => {
+		const id = req.params.id;
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			res.render('categories/category_delete.pug', { errors: errors.array() });
+			return;
+		}
+		if (req.body.pswd === process.env.ADMIN_PSWD) {
+			Item.find({ category: id })
+				.populate('category')
+				.then((result) => {
+					console.log(result);
+					if (result) {
+						res.render('categories/category_delete.pug', {
+							errors: [
+								{ msg: 'You have to delete the following items first.' },
+							],
+							items: result,
+							category: result[0].category,
+						});
+					}
+					res.send('123');
+				});
+		} else {
+			Category.findById(id)
+				.then((category) => {
+					console.log(category);
+					res.render('categories/category_delete.pug', {
+						errors: [{ msg: 'Wrong password' }],
+						category,
+					});
+				})
+				.catch(next);
+		}
+	},
+];
 
 module.exports = {
 	category_list,
@@ -134,4 +185,5 @@ module.exports = {
 	category_update_get,
 	category_update_post,
 	category_delete_get,
+	category_delete_post,
 };

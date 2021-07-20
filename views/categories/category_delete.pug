@@ -9,12 +9,28 @@ block content
         li
           a(href='/category/list').has-text-grey Categories
         li.is-active
-          - const breadcrumbText = isUpdate? 'Edit Category' : 'Add Category'
-          a #{breadcrumbText}
+          a #{category.name}
   .box
-    form(action="category/:id/delete", method="post")
+    form(action=`${category.url}/delete`, method="post")
       .field.mt-2
         label.label(for='pswd') Admin Password
         .control
           input.input( required name='pswd' id='pswd' type='password' placeholder='test123') 
+          p To delete category #{category.name} you need to enter admin password.
+          
       button.button.is-danger Delete
+
+  if errors
+    #errMsg.section.is-centered
+      article.message.is-danger
+        .message-header 
+          p Errors
+          button#closeBtn.delete
+        .message-body 
+          ul
+            for error in errors
+              li!= error.msg
+                if errors.length === 1 && items 
+                  br
+                  each item in items 
+                    a(href=item.url) - #{item.name} 
