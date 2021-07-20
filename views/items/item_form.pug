@@ -15,7 +15,7 @@ block content
           a #{breadcrumbText}
   .box
     - const actionPath = isUpdate? `/item/${item._id}/update` : '/category/create'      
-    form(action=`/item/${category._id}/create`  method='POST')
+    form(action=actionPath   method='POST')
       .field
         label.label(for='name') Name
         .control

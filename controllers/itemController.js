@@ -89,9 +89,26 @@ const item_update_get = (req, res, next) => {
 		});
 };
 
+const item_update_post = [
+	inputValidationArr,
+	(req, res, next) => {
+		const id = req.params.id;
+		Item.findById(id).then((item) => {
+			bcrypt.compare(req.body.password, item.password).then((result) => {
+				if (result || req.body.password === process.env.ADMIN_PSWD) {
+					res.send('OK');
+				} else {
+					res.send('Not OK');
+				}
+			});
+		});
+	},
+];
+
 module.exports = {
 	item_details,
 	item_create_get,
 	item_create_post,
 	item_update_get,
+	item_update_post,
 };
