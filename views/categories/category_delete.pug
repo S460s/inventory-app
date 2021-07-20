@@ -16,7 +16,7 @@ block content
         label.label(for='pswd') Admin Password
         .control
           input.input( required name='pswd' id='pswd' type='password' placeholder='test123') 
-          p To delete category #{category.name} you need to enter admin password.
+          p.mt-2 To delete category #{category.name} you need to enter admin password.
           
       button.button.is-danger Delete
 
@@ -31,6 +31,7 @@ block content
             for error in errors
               li!= error.msg
                 if errors.length === 1 && items 
-                  br
                   each item in items 
+                    br
                     a(href=item.url) - #{item.name} 
+    script(src="../../scripts/errorMsg.js") 

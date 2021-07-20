@@ -151,8 +151,7 @@ const category_delete_post = [
 			Item.find({ category: id })
 				.populate('category')
 				.then((result) => {
-					console.log(result);
-					if (result) {
+					if (result.length > 0) {
 						res.render('categories/category_delete.pug', {
 							errors: [
 								{ msg: 'You have to delete the following items first.' },
@@ -160,8 +159,11 @@ const category_delete_post = [
 							items: result,
 							category: result[0].category,
 						});
+					} else {
+						Category.findByIdAndDelete(id).then((result) => {
+							res.redirect('/category/list');
+						});
 					}
-					res.send('123');
 				});
 		} else {
 			Category.findById(id)
