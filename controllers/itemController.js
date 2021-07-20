@@ -157,10 +157,15 @@ const item_update_post = [
 	},
 ];
 
+const item_delete_get = (req, res, next) => {
+	res.send('OK');
+};
+
 module.exports = {
 	item_details,
 	item_create_get,
 	item_create_post,
 	item_update_get,
 	item_update_post,
+	item_delete_get,
 };
