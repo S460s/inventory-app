@@ -66,9 +66,15 @@ const category_create_post = [
 	},
 ];
 
+const category_update_get = (req, res, next) => {
+	const isNew = true;
+	res.render('categories/category_form.pug', { isNew });
+};
+
 module.exports = {
 	category_list,
 	category_items,
 	category_create_get,
 	category_create_post,
+	category_update_get,
 };
