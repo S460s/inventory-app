@@ -21,3 +21,14 @@ block content
         .control
           textarea.textarea(required id='description' name='description' placeholder='Description about the category.')
       button.button Add
+  if errors
+    #errMsg.section.is-centered
+      article.message.is-danger
+        .message-header 
+          p Errors
+          button#closeBtn.delete
+        .message-body 
+          ul
+            for error in errors
+              li!= error.msg
+  script(src="../scripts/errorMsg.js") 

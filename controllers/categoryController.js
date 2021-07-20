@@ -31,7 +31,16 @@ const category_create_get = (req, res, next) => {
 	res.render('categories/category_form.pug');
 };
 
-const category_create_post = [];
+const category_create_post = [
+	body('name', 'Category name required').trim().isLength({ min: 3 }).escape(),
+	body('description', 'Description is required ').trim().escape(),
+	(req, res, next) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			res.render('categories/category_form.pug', { errors: errors.array() });
+		}
+	},
+];
 
 module.exports = {
 	category_list,

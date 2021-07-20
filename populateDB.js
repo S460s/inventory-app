@@ -68,7 +68,7 @@ mongoose
 			1000,
 			'qwerty',
 			categories[0],
-			'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3Irp72r8lffgzSqG-HiGKmxE0zz6QJyABJA&usqp=CAU'
+			'https://media.istockphoto.com/photos/organic-fuji-apple-picture-id182246506?k=6&m=182246506&s=612x612&w=0&h=OySdajKoiVRwzQVMibsY8XKoNXk7zWNioowc1IQSzvc='
 		);
 		mongoose.connection.close();
 		debug('Disconected');
