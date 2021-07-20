@@ -1,11 +1,15 @@
 const objPromiseAll = require('obj-promise-all');
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcrypt');
 
 const Item = require('../models/itemModel');
 const Category = require('../models/categoryModel');
 
 const inputValidationArr = [
-	body('pswd', 'Password is required.').trim().escape().isLength({ min: 1 }),
+	body('password', 'Password is required.')
+		.trim()
+		.escape()
+		.isLength({ min: 1 }),
 	body('name', 'Name is required.').trim().escape().isLength({ min: 1 }),
 	body('description', 'Description is required.')
 		.trim()
@@ -43,24 +47,31 @@ const item_create_post = [
 	...inputValidationArr,
 	(req, res, next) => {
 		const catid = req.params.catid;
-		const item = new Item({
-			...req.body,
-			category: catid,
-		});
-
-		const errors = validationResult(req);
-		console.log(errors.array);
-		if (!errors.isEmpty()) {
-			Category.findById(catid).then((category) => {
-				res.render('items/item_form.pug', {
-					category,
-					item,
-					errors: errors.array(),
+		bcrypt
+			.hash(req.body.password, 10)
+			.then((hashedPassword) => {
+				const item = new Item({
+					...req.body,
+					password: hashedPassword,
+					category: catid,
 				});
-			});
-		} else {
-			res.send('123123');
-		}
+
+				const errors = validationResult(req);
+				if (!errors.isEmpty()) {
+					Category.findById(catid).then((category) => {
+						res.render('items/item_form.pug', {
+							category,
+							item,
+							errors: errors.array(),
+						});
+					});
+				} else {
+					item.save().then((result) => {
+						res.redirect(`/category/${catid}`);
+					});
+				}
+			})
+			.catch(next);
 	},
 ];
 
