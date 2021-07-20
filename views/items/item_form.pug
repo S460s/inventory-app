@@ -14,7 +14,7 @@ block content
           - const breadcrumbText = isUpdate? 'Edit Item' : 'Add Item'
           a #{breadcrumbText}
   .box
-    - const actionPath = isUpdate? `/item/${item._id}/update` : '/category/create'      
+    - const actionPath = isUpdate? `/item/${item._id}/update` :`/item/${category._id}/create`      
     form(action=actionPath   method='POST')
       .field
         label.label(for='name') Name

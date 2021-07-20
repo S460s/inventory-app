@@ -15,7 +15,7 @@ const inputValidationArr = [
 		.trim()
 		.escape()
 		.isLength({ min: 1 }),
-	body('price', 'Price is required.').trim().escape().isLength({ min: 1 }),
+	body('price', 'Price is required.').trim().escape(),
 	body('numberInStock', 'Number-in-Stock is required.')
 		.trim()
 		.escape()
@@ -66,6 +66,7 @@ const item_create_post = [
 						});
 					});
 				} else {
+					console.log(item);
 					item.save().then((result) => {
 						res.redirect(`/category/${catid}`);
 					});
@@ -111,6 +112,7 @@ const item_update_post = [
 				bcrypt
 					.compare(req.body.password, item.password)
 					.then((result) => {
+						console.log(result);
 						if (result || req.body.password === process.env.ADMIN_PSWD) {
 							Item.exists({ name: req.body.name })
 								.then((isThere) => {
@@ -121,9 +123,7 @@ const item_update_post = [
 												_id: id,
 												category: item.category._id,
 											});
-											console.log('Body');
-											console.log(req.body);
-											Item.findByIdAndUpdate(id, newItem, {}).then(() => {
+											Item.findByIdAndUpdate(item._id, newItem, {}).then(() => {
 												res.redirect(`${item.category.url}`);
 											});
 										}
