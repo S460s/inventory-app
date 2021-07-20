@@ -10,8 +10,9 @@ block content
         a(href='/category/list').has-text-grey Categories
       li.is-active
         a Add Category
-  .box      
-    form(action="/category/create" method='POST')
+  .box
+    - const actionPath = isUpdate? `/category/${category._id}/update` : '/category/create'      
+    form(action=actionPath  method='POST')
       .field
         label.label(for='name') Name
         .control

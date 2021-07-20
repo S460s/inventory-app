@@ -68,8 +68,53 @@ const category_create_post = [
 
 const category_update_get = (req, res, next) => {
 	const isUpdate = true;
-	res.render('categories/category_form.pug', { isUpdate });
+	Category.findById(req.params.id).then((category) => {
+		res.render('categories/category_form.pug', { isUpdate, category });
+	});
 };
+
+const category_update_post = [
+	body('name', 'Category name required').trim().escape(),
+	body('description', 'Description is required ').trim().escape(),
+
+	(req, res, next) => {
+		const id = req.params.id;
+		const category = new Category({ ...req.body, _id: id });
+		console.log(category);
+
+		if (req.body.pswd === process.env.ADMIN_PSWD) {
+			const errors = validationResult(req);
+
+			if (!errors.isEmpty()) {
+				res.render('category/category_form.pug', { isUpdate, category });
+				return;
+			}
+			const exsists = Category.exists({ name: req.body.name }).then(
+				(isThere) => {
+					if (isThere && category.name !== req.body.name) {
+						res.render('categories/category_form.pug', {
+							category,
+							errors: [{ msg: `Category ${req.body.name} already exsists.` }],
+							isUpdate: true,
+						});
+					} else {
+						Category.findByIdAndUpdate(id, category, {})
+							.then((result) => {
+								res.redirect('/category/list');
+							})
+							.catch(next);
+					}
+				}
+			);
+		} else {
+			res.render('categories/category_form.pug', {
+				category,
+				errors: [{ msg: `Wrong password` }],
+				isUpdate: true,
+			});
+		}
+	},
+];
 
 module.exports = {
 	category_list,
@@ -77,4 +122,5 @@ module.exports = {
 	category_create_get,
 	category_create_post,
 	category_update_get,
+	category_update_post,
 };
