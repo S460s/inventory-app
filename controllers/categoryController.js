@@ -32,13 +32,36 @@ const category_create_get = (req, res, next) => {
 };
 
 const category_create_post = [
-	body('name', 'Category name required').trim().isLength({ min: 3 }).escape(),
+	body('name', 'Category name required').trim().escape(),
 	body('description', 'Description is required ').trim().escape(),
+
 	(req, res, next) => {
 		const errors = validationResult(req);
+		const newCategory = new Category({
+			name: req.body.name,
+			description: req.body.description,
+		});
+
 		if (!errors.isEmpty()) {
 			res.render('categories/category_form.pug', { errors: errors.array() });
 		}
+
+		const exsists = Category.exists({ name: req.body.name })
+			.then((isThere) => {
+				if (isThere) {
+					res.render('categories/category_form.pug', {
+						errors: [{ msg: `Category ${req.body.name} already exsists.` }],
+					});
+				} else {
+					newCategory
+						.save()
+						.then(() => {
+							res.redirect('/category/list');
+						})
+						.catch(next);
+				}
+			})
+			.catch(next);
 	},
 ];
 
