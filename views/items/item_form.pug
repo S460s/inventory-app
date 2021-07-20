@@ -21,16 +21,41 @@ block content
         .control
           - const name = item?.name
           input.input(value=name required name='name' id='name' type='text' placeholder='E.g. Apples, Oranges etc.')
+      
+      .field
+        label.label(for='price') Price
+        .control
+          - const price = item?.price
+          input.input(value=price required name='price' id='price' type='number' placeholder='E.g. 2, 5, 19.99')
+          
+      .field
+        label.label(for='numberInStock') Number-in-Stock
+        .control
+          - const numberInStock = item?.numberInStock
+          input.input(value=numberInStock required name='numberInStock' id='numberInStock' type='number' placeholder='E.g. 100, 2000')
+
+      .field
+        label.label(for='contact') Contact 
+        .control
+          - const contact = item?.contact 
+          input.input(value=contact  required name='contact' id='contact' type='text' placeholder='Email or phone')
+
+      .field
+        label.label(for='imgUrl') Image URL 
+        .control
+          - const imgUrl = item?.imgUrl 
+          input.input(value=imgUrl  required name='imgUrl' id='imgUrl' type='text' placeholder='E.g. https://picsum.photos/id/1/200/300')
+      
       .field
         label.label(for='description') Description
         .control
           - const description = item?.description
           textarea.textarea( required id='description' name='description' placeholder='Description about the item.') #{description}
       .field.mt-2
-        label.label(for='pswd') Admin Password
+        label.label(for='pswd') Password
         .control
           input.input( required name='pswd' id='pswd' type='password' placeholder='test123')
-          p.has-text-grey This password will be later used to update and delete the item.
+          p.has-text-grey.mt-2 This password will be later used to update and delete the item.
     
       - const action = isUpdate? 'Update' : 'Add'  
       button.button #{action}
