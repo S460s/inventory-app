@@ -22,7 +22,14 @@ block content
         .control
           - const description = category?.description
           textarea.textarea( required id='description' name='description' placeholder='Description about the category.') #{description}
-      button.button Add
+        if isUpdate
+          .field.mt-2
+            label.label(for='pswd') Admin Password
+            .control
+              input.input( required name='pswd' id='pswd' type='password' placeholder='test123')
+        
+      - const action = isUpdate? 'Update' : 'Add'  
+      button.button #{action}
   if errors
     #errMsg.section.is-centered
       article.message.is-danger
