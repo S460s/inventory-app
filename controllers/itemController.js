@@ -15,7 +15,7 @@ const inputValidationArr = [
 		.trim()
 		.escape()
 		.isLength({ min: 1 }),
-	body('price', 'Price is required.').trim().escape(),
+	body('price', 'Price is required.').trim().escape().isLength({ min: 1 }),
 	body('numberInStock', 'Number-in-Stock is required.')
 		.trim()
 		.escape()
@@ -50,18 +50,13 @@ const item_create_post = [
 		bcrypt
 			.hash(req.body.password, 10)
 			.then((hashedPassword) => {
-				const item = new Item({
-					...req.body,
-					password: hashedPassword,
-					category: catid,
-				});
-
 				const errors = validationResult(req);
+				console.log(errors.isEmpty());
 				if (!errors.isEmpty()) {
 					Category.findById(catid).then((category) => {
 						res.render('items/item_form.pug', {
 							category,
-							item,
+							item: req.body,
 							errors: errors.array(),
 						});
 					});
@@ -72,12 +67,17 @@ const item_create_post = [
 							Category.findById(catid).then((category) => {
 								res.render('items/item_form.pug', {
 									category,
-									item,
+									item: req.body,
 									errors: [{ msg: `Item ${req.body.name} already exists.` }],
 								});
 								return;
 							});
 						} else {
+							const item = new Item({
+								...req.body,
+								password: hashedPassword,
+								category: catid,
+							});
 							item.save().then((result) => {
 								res.redirect(`/category/${catid}`);
 							});
@@ -122,12 +122,9 @@ const item_update_post = [
 					return;
 				}
 
-				console.log(item.password);
-
 				bcrypt
 					.compare(req.body.password, item.password)
 					.then((result) => {
-						console.log(result);
 						if (result || req.body.password === process.env.ADMIN_PSWD) {
 							Item.exists({ name: req.body.name })
 								.then((isThere) => {
